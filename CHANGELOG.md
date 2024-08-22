@@ -2,6 +2,171 @@
 
 <!-- do not remove -->
 
+## 0.4.4
+
+### New Features
+
+- Replace `__call__` with `rt` in handler functions ([#334](https://github.com/AnswerDotAI/fasthtml/issues/334))
+- Add `flat_tuple` and use it to allow nested tuples in route responses
+- Add `body` parameter for decoded body
+- Move pico-specific components to separate module ([#327](https://github.com/AnswerDotAI/fasthtml/issues/327))
+- Add "get" and "post" as default methods on routes ([#317](https://github.com/AnswerDotAI/fasthtml/issues/317))
+- Support Reverse URL lookups by exposing `url_for` ([#189](https://github.com/AnswerDotAI/fasthtml/issues/189))
+
+
+## 0.4.3
+
+### New Features
+
+- Fastlite 0.0.9 dep
+
+
+## 0.4.2
+
+### New Features
+
+- Rename `Checkbox` to `CheckboxX` ([#314](https://github.com/AnswerDotAI/fasthtml/issues/314))
+  - CheckboxX also adds a hidden field before the checkbox
+- Automatically choose last field in form data if list provided by non-list parameter
+
+
+## 0.4.1
+
+### Bugs Squashed
+
+- post release fix for `fill_form` ([#309](https://github.com/AnswerDotAI/fasthtml/issues/309))
+
+
+## 0.4.0
+
+### Breaking changes
+
+- `__init.py__` now only contains `fasthtml.core`
+
+### New Features
+
+- Fastcore 1.7 compatibility ([#307](https://github.com/AnswerDotAI/fasthtml/issues/307))
+- Add `fasthtml.basics` for importing the main fasthtml modules
+
+
+## 0.3.7
+
+### New Features
+
+- Add `reload_includes` and `reload_excludes` options to serve ([#291](https://github.com/AnswerDotAI/fasthtml/pull/291)), thanks to [@pydanny](https://github.com/pydanny)
+
+### Bugs Squashed
+
+- katex.js missing ([#305](https://github.com/AnswerDotAI/fasthtml/issues/305))
+
+
+## 0.3.6
+
+### Bugs Squashed
+
+- postrelease fix markdown js ([#290](https://github.com/AnswerDotAI/fasthtml/issues/290))
+
+
+## 0.3.5
+
+### New Features
+
+- Support `dict` value in `hx_vals` ([#288](https://github.com/AnswerDotAI/fasthtml/issues/288))
+- Add `sess_cls` param to `FastHTML` ([#284](https://github.com/AnswerDotAI/fasthtml/issues/284))
+- Make `index` a special handler name for path "/" get request ([#274](https://github.com/AnswerDotAI/fasthtml/issues/274))
+- Use `run_in_threadpool` for non-async handlers ([#270](https://github.com/AnswerDotAI/fasthtml/issues/270))
+- Enhance LaTeX rendering in Markdown with support for environments ([#269](https://github.com/AnswerDotAI/fasthtml/pull/269)), thanks to [@rian-dolphin](https://github.com/rian-dolphin)
+
+### Bugs Squashed
+
+- Duplicate parameters in components.pyi ([#255](https://github.com/AnswerDotAI/fasthtml/issues/255))
+
+
+## 0.3.4
+
+### New Features
+
+- Experimental new named-based HTMX routing system ([#267](https://github.com/AnswerDotAI/fasthtml/issues/267))
+  - `uri` function to construct `url_for` path params
+  - patch `HTTPConnection.url_path_for`
+  - replace HTTP verb FT attr names with `hx-` prefixed versions, and look up values in route names (with `link` used for `href` attrs)
+  - Default route paths to `/{func.__name__}`
+  - Default route method to `post` if func name isn't an http verb
+  - Support skipping `()` in route decorators
+
+
+## 0.3.3
+
+### New Features
+
+- Default route name to function name if method provided ([#263](https://github.com/AnswerDotAI/fasthtml/issues/263))
+- `surreal` and `htmx` bool params for `FastHTML` and `fast_app` ([#258](https://github.com/AnswerDotAI/fasthtml/issues/258))
+
+
+## 0.3.2
+
+### New Features
+
+- generic list annotated params double-wrapped ([#253](https://github.com/AnswerDotAI/fasthtml/issues/253))
+- Add `Prev()` ([#253](https://github.com/AnswerDotAI/fasthtml/issues/253))
+- `ft_cfg` config defaults ([#251](https://github.com/AnswerDotAI/fasthtml/issues/251))
+- Make `fill_form` set selected option ([#185](https://github.com/AnswerDotAI/fasthtml/pull/185)), thanks to [@ostwilkens](https://github.com/ostwilkens)
+
+### Bugs Squashed
+
+- Use re.fullmatch for Beforeware ([#221](https://github.com/AnswerDotAI/fasthtml/pull/221)), thanks to [@justbur](https://github.com/justbur)
+
+
+## 0.3.0
+
+### Breaking changes
+
+- Do not make session vars available as direct params ([#237](https://github.com/AnswerDotAI/fasthtml/issues/237))
+
+### New Features
+
+- Add surreal.js helpers `Me`, `Any`, `On` ([#238](https://github.com/AnswerDotAI/fasthtml/issues/238))
+- Add support for application/json in POST requests ([#234](https://github.com/AnswerDotAI/fasthtml/pull/234)), thanks to [@khoaHyh](https://github.com/khoaHyh)
+- Wrap Starlette's session in an AttrDict ([#213](https://github.com/AnswerDotAI/fasthtml/pull/213)), thanks to [@jbellis](https://github.com/jbellis)
+- Handle mismatches between existing db and schema ([#202](https://github.com/AnswerDotAI/fasthtml/pull/202)), thanks to [@ncoop57](https://github.com/ncoop57)
+- Raise warning if type is not passed ([#195](https://github.com/AnswerDotAI/fasthtml/issues/195))
+
+### Bugs Squashed
+
+- railway deploy doesn't check for project name ([#230](https://github.com/AnswerDotAI/fasthtml/pull/230)), thanks to [@gautam-e](https://github.com/gautam-e)
+
+
+## 0.2.4
+
+### Bugs Squashed
+
+- Signature may not resolve types from str ([#198](https://github.com/AnswerDotAI/fasthtml/issues/198))
+
+
+## 0.2.3
+
+### New Features
+
+- Add `attrs1st` formatting to html2ft ([#193](https://github.com/AnswerDotAI/fasthtml/pull/193)), thanks to [@AndrewRPerkins](https://github.com/AndrewRPerkins)
+
+
+## 0.2.2
+
+### New Features
+
+- Check for railway app version ([#192](https://github.com/AnswerDotAI/fasthtml/issues/192))
+- Update `flat_xt` to handle single FT item ([#190](https://github.com/AnswerDotAI/fasthtml/issues/190))
+- Support FT in HTTPException handling ([#175](https://github.com/AnswerDotAI/fasthtml/issues/175))
+- Add `pep8_app.py` ([#163](https://github.com/AnswerDotAI/fasthtml/issues/163))
+- Add support for LaTeX formula rendering when rendering markdown ([#158](https://github.com/AnswerDotAI/fasthtml/pull/158)), thanks to [@yym68686](https://github.com/yym68686)
+- Add to request: `req.hdrs,req.ftrs,req.htmlkw,req.bodykw` ([#152](https://github.com/AnswerDotAI/fasthtml/issues/152))
+- Add htmlkw to `fast_app` ([#145](https://github.com/AnswerDotAI/fasthtml/pull/145)), thanks to [@ranzuh](https://github.com/ranzuh)
+- Add `Form` for multipart form data; initial poetry compatibility for `serve` ([#137](https://github.com/AnswerDotAI/fasthtml/issues/137))
+- changes toast names to avoid conflict with bootstrap ([#133](https://github.com/AnswerDotAI/fasthtml/pull/133)), thanks to [@vacmar01](https://github.com/vacmar01)
+- Automatically move ('title','meta','link','style','base') into head ([#122](https://github.com/AnswerDotAI/fasthtml/issues/122))
+- Allow for `Any` or `FT` as return type of routes ([#112](https://github.com/AnswerDotAI/fasthtml/issues/112))
+
+
 ## 0.2.1
 
 
@@ -33,7 +198,7 @@
 
 ### New Features
 
-- Skip redundent formatting in `loose_format` ([#79](https://github.com/AnswerDotAI/fasthtml/issues/79))
+- Skip redundant formatting in `loose_format` ([#79](https://github.com/AnswerDotAI/fasthtml/issues/79))
 - Add `htmlkw` param to `FastHTML` ([#78](https://github.com/AnswerDotAI/fasthtml/issues/78))
 
 

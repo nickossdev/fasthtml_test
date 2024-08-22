@@ -1,5 +1,5 @@
 ###
-# Walkthough of an idiomatic fasthtml app
+# Walkthrough of an idiomatic fasthtml app
 ###
 
 # This fasthtml app includes functionality from fastcore, starlette, fastlite, and fasthtml itself.
@@ -13,7 +13,7 @@ from fasthtml.common import *
 """
 from fasthtml.common import (
     # These are the HTML components we use in this app
-    A, AX, Button, Card, Checkbox, Container, Div, Form, Grid, Group, H1, H2, Hidden, Input, Li, Main, Script, Style, Textarea, Title, Titled, Ul,
+    A, AX, Button, Card, CheckboxX, Container, Div, Form, Grid, Group, H1, H2, Hidden, Input, Li, Main, Script, Style, Textarea, Title, Titled, Ul,
     # These are FastHTML symbols we'll use
     Beforeware, fast_app, SortableJS, fill_form, picolink, serve,
     # These are from Starlette, Fastlite, fastcore, and the Python stdlib
@@ -62,12 +62,17 @@ import { proc_htmx} from "https://cdn.jsdelivr.net/gh/answerdotai/fasthtml-js/fa
 proc_htmx('.markdown', e => e.innerHTML = marked.parse(e.textContent));
 """
 
+# We will use this in our `exception_handlers` dict
+def _not_found(req, exc): return Titled('Oh no!', Div('We could not find that page :('))
+
 # To create a Beforeware object, we pass the function itself, and optionally a list of regexes to skip.
 bware = Beforeware(before, skip=[r'/favicon\.ico', r'/static/.*', r'.*\.css', '/login'])
 # The `FastHTML` class is a subclass of `Starlette`, so you can use any parameters that `Starlette` accepts.
 # In addition, you can add your Beforeware here, and any headers you want included in HTML responses.
 # FastHTML includes the "HTMX" and "Surreal" libraries in headers, unless you pass `default_hdrs=False`.
-app, rt = fast_app(before=bware,
+app = FastHTML(before=bware,
+               # These are the same as Starlette exception_handlers, except they also support `FT` results
+               exception_handlers={404: _not_found},
                # PicoCSS is a particularly simple CSS framework, with some basic integration built in to FastHTML.
                # `picolink` is pre-defined with the header for the PicoCSS stylesheet.
                # You can use any CSS framework you want, or none at all.
@@ -229,9 +234,6 @@ def post(id:list[int]):
     return tuple(todos(order_by='priority'))
 
 # Refactoring components in FastHTML is as simple as creating Python functions.
-# `clr_details` creates a div to clear the details of the current Todo.
-def clr_details(): return Div(hx_swap_oob='innerHTML', id='current-todo')
-
 # The `clr_details` function creates a Div with specific HTMX attributes.
 # `hx_swap_oob='innerHTML'` tells HTMX to swap the inner HTML of the target element out-of-band,
 # meaning it will update this element regardless of where the HTMX request originated from.
@@ -253,7 +255,7 @@ async def get(id:int):
     # The `hx_put` attribute tells HTMX to send a PUT request when the form is submitted.
     # `target_id` specifies which element will be updated with the server's response.
     res = Form(Group(Input(id="title"), Button("Save")),
-        Hidden(id="id"), Checkbox(id="done", label='Done'),
+        Hidden(id="id"), CheckboxX(id="done", label='Done'),
         Textarea(id="details", name="details", rows=10),
         hx_put="/", target_id=f'todo-{id}', id="edit")
     # `fill_form` populates the form with existing todo data, and returns the result.
@@ -263,10 +265,10 @@ async def get(id:int):
 
 @rt("/")
 async def put(todo: Todo):
-    # `upsert` and `update` are both part of the MiniDataAPI spec, updating or inserting an item.
-    # Note that the updated/inserted todo is returned. By returning the updated todo, we can update the list directly.
+    # `update` is part of the MiniDataAPI spec.
+    # Note that the updated todo is returned. By returning the updated todo, we can update the list directly.
     # Because we return a tuple with `clr_details()`, the details view is also cleared.
-    return todos.upsert(todo), clr_details()
+    return todos.update(todo), clr_details()
 
 @rt("/")
 async def post(todo:Todo):
